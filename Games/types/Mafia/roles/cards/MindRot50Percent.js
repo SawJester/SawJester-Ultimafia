@@ -15,7 +15,7 @@ module.exports = class MindRot50Percent extends Card {
 
           if (!this.actor.alive) return;
 
-          if ((Random.randInt(0, 1) == 0)){
+          if (Random.randInt(0, 1) == 0) {
             this.blockWithMindRot(this.actor);
           }
         },
