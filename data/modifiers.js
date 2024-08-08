@@ -391,8 +391,7 @@ const modifierData = {
     },
     Infected: {
       internal: ["MindRot50Percent"],
-      description:
-        "Each night has 50% chance to be inflicted with Mind Rot.",
+      description: "Each night has 50% chance to be inflicted with Mind Rot.",
     },
     Wise: {
       internal: ["MakePlayerLearnOneOfTwoPlayersOnDeath"],
