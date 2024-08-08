@@ -13,8 +13,6 @@ module.exports = class MindRot50Percent extends Card {
         run: function () {
           if (this.game.getStateName() != "Night") return;
 
-          if (!this.actor.alive) return;
-
           if (Random.randInt(0, 1) == 0) {
             this.blockWithMindRot(this.actor);
           }
