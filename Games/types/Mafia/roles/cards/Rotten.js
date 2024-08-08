@@ -14,9 +14,8 @@ module.exports = class Rotten extends Card {
           if (this.game.getStateName() != "Night") return;
 
           //if (!this.actor.alive) return;
-          
-            this.blockWithMindRot(this.actor);
-          
+
+          this.blockWithMindRot(this.actor);
         },
       },
     ];
