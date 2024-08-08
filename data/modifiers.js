@@ -384,6 +384,16 @@ const modifierData = {
       description:
         "On death a random Village Aligned player will be chosen to be inflicted with Mind Rot for the rest of the game.",
     },
+    Rotten: {
+      internal: ["Rotten"],
+      description:
+        "At the start of the game is inflicted with Mind Rot for the rest of the game.",
+    },
+    Infected: {
+      internal: ["MindRot50Percent"],
+      description:
+        "Each night has 50% chance to be inflicted with Mind Rot.",
+    },
     Wise: {
       internal: ["MakePlayerLearnOneOfTwoPlayersOnDeath"],
       description: "On death learn that 1 of 2 players is evil.",
