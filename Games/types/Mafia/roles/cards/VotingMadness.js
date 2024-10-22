@@ -9,7 +9,7 @@ module.exports = class VotingMadness extends Card {
       Victim: {
         states: ["Night"],
         flags: ["voting"],
-        targets: { include: ["alive","self"], exclude: ["dead"] },
+        targets: { include: ["alive", "self"], exclude: ["dead"] },
         action: {
           priority: PRIORITY_KILL_DEFAULT - 1,
           run: function () {
@@ -20,7 +20,7 @@ module.exports = class VotingMadness extends Card {
       Target: {
         states: ["Night"],
         flags: ["voting"],
-        targets: { include: ["alive","self"], exclude: ["dead"] },
+        targets: { include: ["alive", "self"], exclude: ["dead"] },
         action: {
           priority: PRIORITY_KILL_DEFAULT,
           run: function () {
@@ -30,8 +30,8 @@ module.exports = class VotingMadness extends Card {
             victim = this.actor.role.data.victim;
 
             victim.queueAlert(
-            `A ${this.actor.role.name} has selected for you to be mad at ${this.target.name}. If ${this.target.name} does not receive votes from 1/3 or more of the living players, You, ${this.target.name}, or Both will Die!`
-          );
+              `A ${this.actor.role.name} has selected for you to be mad at ${this.target.name}. If ${this.target.name} does not receive votes from 1/3 or more of the living players, You, ${this.target.name}, or Both will Die!`
+            );
             this.actor.role.data.victim.giveEffect(
               "CursedVote",
               this.actor,
