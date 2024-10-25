@@ -4,4 +4,8 @@ module.exports = class MafiaEffect extends Effect {
   constructor(name, data) {
     super(name, data);
   }
+
+  get inspectName() {
+    return this.name;
+  }
 };
