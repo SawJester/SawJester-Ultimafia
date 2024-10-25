@@ -5,6 +5,7 @@ module.exports = class BleedingCult extends Effect {
   constructor(killer) {
     super("BleedingCult");
     this.killer = killer;
+    this.canBeInspected = true;
   }
 
   apply(player) {
@@ -38,5 +39,8 @@ module.exports = class BleedingCult extends Effect {
   remove() {
     super.remove();
     this.action.cancel(true);
+  }
+  get inspectName() {
+    return "has Been stabbed with a Gremlin's Magic Knife";
   }
 };
