@@ -6,6 +6,7 @@ const { PRIORITY_NIGHT_ROLE_BLOCKER } = require("../const/Priority");
 module.exports = class Alcoholic extends Effect {
   constructor() {
     super("Alcoholic");
+    this.canBeInspected = true;
 
     this.listeners = {
       state: function () {
@@ -32,4 +33,10 @@ module.exports = class Alcoholic extends Effect {
       },
     };
   }
+
+  get inspectName() {
+    return "Has been Drinking with a Bartender and developed Alcoholism";
+  }
+
+  
 };
