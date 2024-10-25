@@ -5,6 +5,7 @@ module.exports = class Bleeding extends Effect {
   constructor(killer) {
     super("Bleeding");
     this.killer = killer;
+    this.canBeInspected = true;
   }
 
   apply(player) {
@@ -37,5 +38,9 @@ module.exports = class Bleeding extends Effect {
   remove() {
     super.remove();
     this.action.cancel(true);
+  }
+
+  get inspectName() {
+    return "Is Bleeding from a stab wound";
   }
 };
