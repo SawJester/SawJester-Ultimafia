@@ -4,6 +4,7 @@ module.exports = class Blind extends Effect {
   constructor(lifespan) {
     super("Blind");
     this.lifespan = lifespan || Infinity;
+    this.canBeInspected = true;
   }
 
   hear(message) {
@@ -28,5 +29,9 @@ module.exports = class Blind extends Effect {
 
   seeTyping(info) {
     if (info.playerId != this.player.id) info.cancel = true;
+  }
+
+    get inspectName() {
+    return "has been Blinded";
   }
 };
