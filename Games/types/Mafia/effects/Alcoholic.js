@@ -35,7 +35,7 @@ module.exports = class Alcoholic extends Effect {
   }
 
   get inspectName() {
-    return "Has been Drinking with a Bartender and developed Alcoholism";
+    return "Has developed Alcoholism from Drinking with a Bartender";
   }
 
   
