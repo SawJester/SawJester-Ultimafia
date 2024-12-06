@@ -683,10 +683,12 @@ module.exports = class Player {
     for (let effect of this.effects) {
       effect.hear(message);
       if (message.cancel) return;
-      if(message.fiddled){
-        message.content = message.sender.name + " says something, but you cannot hear them!";
-        message.modified = true; 
-        break; }
+      if (message.fiddled) {
+        message.content =
+          message.sender.name + " says something, but you cannot hear them!";
+        message.modified = true;
+        break;
+      }
     }
 
     if (!message.modified) message = originalMessage;
@@ -964,7 +966,7 @@ module.exports = class Player {
   getAppearance(type, noModifier) {
     noModifier = noModifier || this.role.hideModifier[type];
 
-    if (this.tempAppearance[type] != null){
+    if (this.tempAppearance[type] != null) {
       return `${this.tempAppearance[type]}${
         noModifier ? "" : ":" + this.tempAppearanceMods[type]
       }`;
@@ -977,7 +979,7 @@ module.exports = class Player {
   setTempAppearance(type, appearance) {
     if (appearance == "real") appearance = this.role.name;
 
-  this.tempAppearanceMods[type] = appearance.split(":")[1];
+    this.tempAppearanceMods[type] = appearance.split(":")[1];
 
     this.tempAppearance[type] = appearance.split(":")[0];
   }
