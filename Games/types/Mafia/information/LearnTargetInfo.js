@@ -51,10 +51,16 @@ module.exports = class LearnTargetInfo extends Information {
     }
   }
   isFavorable() {
-      return true;
+  if(!this.isEvil(this.mainInfo)){
+    return false;
+  }
+  return true;
   }
   isUnfavorable() {
-      return true;
+    if(this.isEvil(this.mainInfo)){
+    return true;
+  }
+  return false;
   }
 
   makeTrue() {
@@ -65,7 +71,11 @@ module.exports = class LearnTargetInfo extends Information {
      this.mainInfo = Random.randArrayVal(players);
   }
   makeFavorable() {
+    let players = this.game.alivePlayers().filter((p) => !this.isEvil(p));
+     this.mainInfo = Random.randArrayVal(players);
   }
   makeUnfavorable() {
+    let players = this.game.alivePlayers().filter((p) => this.isEvil(p));
+     this.mainInfo = Random.randArrayVal(players);
   }
 };
