@@ -47,11 +47,11 @@ module.exports = class Duel extends Card {
           labels: ["duel"],
           run: function () {
             this.actor.def = 10;
-            this.actor.atk = 15;
-            this.actor.crit = 1.0;
+            this.actor.atk = 10;
+            this.actor.crit = 1;
             this.target.def = 10;
-            this.target.atk = 15;
-            this.target.crit = 1.0;
+            this.target.atk = 10;
+            this.target.crit = 1;
             this.target.holdItem("Blade");
             this.actor.holdItem("Blade");
           },
