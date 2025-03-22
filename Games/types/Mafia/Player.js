@@ -251,6 +251,7 @@ module.exports = class MafiaPlayer extends Player {
         }
       attacker.damage(amount/2, damageType, attacker, instant, reveal, canCrit);
       amount = amount/2;
+      this.data.Parry = false;
     }
     if(this.data.Block >= amount){
       this.data.Block -= amount;
