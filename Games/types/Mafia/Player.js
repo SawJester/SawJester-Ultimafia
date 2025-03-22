@@ -281,7 +281,7 @@ module.exports = class MafiaPlayer extends Player {
           }
           this.queueAlert(`You block the Attack!`);
           }
-    
+    return amount;
   }
 
   kill(killType, killer, instant) {
