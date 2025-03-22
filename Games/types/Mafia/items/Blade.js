@@ -1,10 +1,39 @@
 const Item = require("../Item");
+const Action = require("../Action");
+const Random = require("../../../../lib/Random");
 
 module.exports = class Blade extends Item {
-  constructor(meetingName, target) {
+  constructor(meetingName, user, target, charge) {
     super("Blade");
     this.reveal = true;
+    this.User = user;
+    this.Enemy = target;
     this.meetingName = meetingName;
+    this.charge = charge || 0;
+     this.targets = ["Attack", "Defend", "Focus", "Charge"];
+    if(this.charge == 0){
+      this.targets = ["Attack", "Defend", "Focus", "Charge"];
+    }
+    if(this.charge == 1){
+      this.targets = ["Attack+", "Defend+", "Focus+", "Charge"];
+    }
+    if(this.charge == 2){
+      if(this.User.role.alignment == "Village"){
+      this.targets = ["Towntell Takedown", "FMPOV I'm Clear Defense", "Tunneling Focus", "FOS"];
+      }
+      if(this.User.role.alignment == "Mafia"){
+      this.targets = ["Mafia Mash", "WIFOM Defense", "Blitz Focus", "Bus"];
+      }
+      if(this.User.role.alignment == "Cult"){
+      this.targets = ["Dark Arts", "Blood Ritual", "Worship", "Convert"];
+      }
+      if(this.User.role.alignment == "Independent"){
+      this.targets = ["Triple Attack", "Entrench", "Adrenaline", "Chance Time"];
+      }
+      if(this.User.role.name == "Samurai"){
+      this.targets = ["Typhoon Slash", "Parry", "Focus Fury", "Final Slash"];
+      }
+    }
 
     this.meetings = {
       [meetingName]: {
@@ -22,9 +51,187 @@ module.exports = class Blade extends Item {
           "hideAfterVote",
         ],
         inputType: "custom",
-        targets: ["Attack", "Defend", "Charge"],
-        performAction: this.performAction.bind(this),
-        run: this.run.bind(this),
+        targets: this.targets,
+         action: {
+          labels: ["kill"],
+          item: this,
+          run: function () {
+          
+          this.actor.data.MoveHasBeenSelected = true;
+          this.actor.data.MoveSelected = this.target;
+          this.item.drop();
+          
+          if(this.item.Enemy && this.item.Enemy.alive && this.item.Enemy.data.MoveHasBeenSelected == true){
+          let duelists = [this.actor, this.item.Enemy];
+          duelists = Random.randomizeArray(duelists);
+          //Defend Actions
+          for(let player in duelists){
+          if(player.data.MoveSelected == "Defend"){
+          player.data.Block += Random.randInt((player.def-3),(player.def+5));
+          this.game.sendAlert(`${player.name} uses Defend! Their Defense increases for this turn.`);
+          }
+          if(player.data.MoveSelected == "Defend+"){
+          player.data.Block += Random.randInt((player.def),(player.def+7))*3;
+          this.game.sendAlert(`${player.name} uses Defend+! Their Defense increases for this turn.`);
+          player.data.Charge = 0;
+          }
+          if(player.data.MoveSelected == "FMPOV I'm Clear Defense"){
+          player.data.Block += Random.randInt((player.def),(player.def+7))*4;
+          let info = this.game.createInformation(
+              "RevealInfo",
+              player,
+              this.game,
+              player,
+              null,
+              "All"
+            );
+            info.processInfo();
+            info.getInfoRaw();
+          this.game.sendAlert(`${player.name} uses FMPOV I'm Clear Defense! Their Defense increases for this turn and their Role is Revealed.`);
+          player.data.Charge = 0;
+          }
+          if(player.data.MoveSelected == "WIFOM Defense"){
+          player.data.Block += Random.randInt((player.def),(player.def+7))*4;
+          for(let person of this.game.alivePlayers()){
+            if(person.faction == "Village"){
+              person.giveEffect("Scrambled", -1);
+            }
+          }
+          this.game.sendAlert(`${player.name} uses WIFOM Defense! Their Defense increases for this turn and All Village Aligned players are Scrambled.`);
+          player.data.Charge = 0;
+          }
+          if(player.data.MoveSelected == "Blood Ritual"){
+          player.data.blood += 40;
+          this.game.sendAlert(`${player.name} uses Blood Ritual! They gain 40% Blood.`);
+          player.data.Charge = 0;
+          }
+          if(player.data.MoveSelected == "Entrench"){
+          player.def += 12;
+          player.data.Block += Random.randInt((player.def),(player.def+7))*3;
+          this.game.sendAlert(`${player.name} uses Entrench! Their Defense increases for this turn and their Defending power is increased.`);
+          player.data.Charge = 0;
+          }
+          if(player.data.MoveSelected == "Parry"){
+          player.data.Parry = true;
+          player.data.Block += Random.randInt((player.def),(player.def+7))*3;
+          this.game.sendAlert(`${player.name} uses Parry! Their Defense increases for this turn.`);
+          player.data.Charge = 0;
+          }
+          }
+          //Attack Actions
+          for(let player in duelists){
+          let otherPlayer;
+          if(duelist.indexOf(player) == 0){
+            otherPlayer = duelist[1];
+          }
+          else{
+            otherPlayer = duelist[0];
+          }
+          if(player.data.MoveSelected == "Attack"){
+          this.game.sendAlert(`${player.name} uses attack!`);
+          let damage = Random.randInt((player.atk),(player.atk+5));
+          if(otherPlayer.data.Block > 0){
+            if(otherPlayer.data.Block >= damage){
+              otherPlayer.data.Block -= damage;
+              damage = 0;
+            }
+            else{
+              damage -= otherPlayer.data.Block;
+              otherPlayer.data.Block = 0;
+            }
+          }
+          if(damage > 0){
+            if(Random.randInt(1,20) <= player.crit){
+              damage = damage*2;
+            }
+            otherPlayer.data.blood -= damage;
+            this.game.sendAlert(`${otherPlayer.name} loses ${damage}% blood!`);
+            if (otherPlayer.data.blood <= 0) {
+            otherPlayer.kill("blood", player);
+          }
+          }
+          else{
+          this.game.sendAlert(`${otherPlayer.name} blocks the Attack!`);
+          }
+          }
+          if(player.data.MoveSelected == "Attack+"){
+          this.game.sendAlert(`${player.name} uses attack+!`);
+          let damage = Random.randInt((player.atk)+3,(player.atk+10));
+          if(otherPlayer.data.Block > 0){
+            if(otherPlayer.data.Block >= damage){
+              otherPlayer.data.Block -= damage;
+              damage = 0;
+            }
+            else{
+              damage -= otherPlayer.data.Block;
+              otherPlayer.data.Block = 0;
+            }
+          }
+          if(damage > 0){
+            if(Random.randInt(1,20) <= player.crit){
+              damage = damage*2;
+            }
+            otherPlayer.data.blood -= damage;
+            this.game.sendAlert(`${otherPlayer.name} loses ${damage}% blood!`);
+            if (otherPlayer.data.blood <= 0) {
+            otherPlayer.kill("blood", player);
+          }
+          }
+          else{
+          this.game.sendAlert(`${otherPlayer.name} blocks the Attack!`);
+          }
+          player.data.Charge = 0;
+          }
+       
+          }
+          //Buff Actions
+          for(let player in duelists){
+          if(player.data.MoveSelected == "Focus"){
+          let stats = ["atk", "atk", "def", "def", "crit"];
+          let toIncrease = Random.randArrayVal(stats);
+          if(toIncrease == "atk"){
+          this.game.sendAlert(`${player.name} uses Focus! Their Attacking power is increased.`);
+            player.atk += 5;
+          }
+          if(toIncrease == "def"){
+          this.game.sendAlert(`${player.name} uses Focus! Their Defending power is increased.`);
+            player.def += 6;
+          }
+          if(toIncrease == "crit"){
+          this.game.sendAlert(`${player.name} uses Focus! Their Crit Chance is increased.`);
+            player.crit += 1;
+          }
+          }
+          if(player.data.MoveSelected == "Focus+"){
+          let stats = ["atk", "atk", "def", "def", "crit"];
+          let toIncrease = Random.randArrayVal(stats);
+          if(toIncrease == "atk"){
+          this.game.sendAlert(`${player.name} uses Focus+! Their Attacking power is increased.`);
+            player.atk += 15;
+          }
+          if(toIncrease == "def"){
+          this.game.sendAlert(`${player.name} uses Focus+! Their Defending power is increased.`);
+            player.def += 16;
+          }
+          if(toIncrease == "crit"){
+          this.game.sendAlert(`${player.name} uses Focus+! Their Crit Chance is increased.`);
+            player.crit += 2;
+          }
+          player.data.Charge = 0;
+          }
+          if(player.data.MoveSelected == "Charge"){
+          player.data.Charge += 1
+          this.game.sendAlert(`${player.name} uses Charge! Their next Move will be Stronger.`);
+          }
+          }
+
+            
+          }
+          
+
+            
+          },
+         },
       },
     };
   }
