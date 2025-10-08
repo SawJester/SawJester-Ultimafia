@@ -5,7 +5,7 @@ module.exports = class Scrambled extends Effect {
   constructor(lifespan) {
     super("Scrambled");
     this.lifespan = lifespan || Infinity;
-     this.isHarmful = true;
+    this.isHarmful = true;
   }
 
   hear(message) {
