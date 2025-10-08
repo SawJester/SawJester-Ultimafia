@@ -5,6 +5,7 @@ module.exports = class CannotChangeVoteAtDay extends Effect {
     super("CannotChangeVoteAtDay");
     this.lifespan = lifespan ?? Infinity;
     this.meetingName = meetingName || "Village";
+    this.isHarmful = true;
 
     this.listeners = {
       meetingsMade: function () {
