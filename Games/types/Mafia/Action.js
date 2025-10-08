@@ -29,6 +29,13 @@ module.exports = class MafiaAction extends Action {
     target = target || this.target;
 
     target.setTempImmunity("poison", power);
+
+    for(let effect of target.effects){
+      if(effect.isHarmful == true){
+        effect.remove();
+      }
+    }
+    /*
     target.removeEffect("Poison", true);
     target.removeEffect("Bleeding", true);
     target.removeEffect("BleedingCult", true);
@@ -43,6 +50,7 @@ module.exports = class MafiaAction extends Action {
     target.removeEffect("Virus", true);
     target.removeEffect("Alcoholic", true);
     target.removeEffect("Lycan", true);
+    */
   }
 
   preventConvert(power, target) {
