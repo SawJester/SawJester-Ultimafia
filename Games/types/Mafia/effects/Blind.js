@@ -4,6 +4,7 @@ module.exports = class Blind extends Effect {
   constructor(lifespan) {
     super("Blind");
     this.lifespan = lifespan || Infinity;
+    this.isHarmful = true;
   }
 
   hear(message) {
