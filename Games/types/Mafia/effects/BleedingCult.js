@@ -5,6 +5,7 @@ module.exports = class BleedingCult extends Effect {
   constructor(killer) {
     super("BleedingCult");
     this.killer = killer;
+    this.isHarmful = true;
   }
 
   apply(player) {
