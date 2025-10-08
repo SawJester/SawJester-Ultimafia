@@ -17,7 +17,7 @@ module.exports = class ChoirSong extends Effect {
         //if(this.word == "Complete") return;
 
         var action = new Action({
-          labels: ["hidden", "absolute", "condemn", "overthrow", "Choir"],
+          labels: ["hidden", "absolute", "condemn", "overthrow", "Choir", "malicious effect"],
           actor: this.actor,
           target: this.player,
           game: this.game,
