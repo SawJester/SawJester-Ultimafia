@@ -1,6 +1,6 @@
 const Effect = require("../Effect");
 const Action = require("../Action");
-const { PRIORITY_NIGHT_ROLE_BLOCKER } = require("../const/Priority");
+const { PRIORITY_FULL_DISABLE } = require("../const/Priority");
 
 module.exports = class Delirious extends Effect {
   constructor(effecter, lifespan, types, role) {
@@ -8,6 +8,7 @@ module.exports = class Delirious extends Effect {
     this.effecter = effecter;
     this.effecterRole = role;
     this.lifespan = lifespan;
+    this.isHarmful = true;
     if (types != null) {
       this.types = types;
     } else {
@@ -24,7 +25,7 @@ module.exports = class Delirious extends Effect {
           target: this.player,
           game: this.player.game,
           effect: this,
-          priority: -999,
+          priority: PRIORITY_FULL_DISABLE,
           labels: ["block", "hidden"],
           run: function () {
             if (!this.target.isDelirious()) {
