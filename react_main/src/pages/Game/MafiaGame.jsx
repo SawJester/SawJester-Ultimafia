@@ -492,9 +492,7 @@ export default function MafiaGame() {
             <SettingsMenu />
           </>
         }
-        centerPanelContent={
-          <TextMeetingLayout />
-        }
+        centerPanelContent={<TextMeetingLayout />}
         rightPanelContent={
           <>
             <HistoryKeeper history={history} stateViewing={stateViewing} />
