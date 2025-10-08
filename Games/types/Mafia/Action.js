@@ -30,8 +30,8 @@ module.exports = class MafiaAction extends Action {
 
     target.setTempImmunity("poison", power);
 
-    for(let effect of target.effects){
-      if(effect.isHarmful == true){
+    for (let effect of target.effects) {
+      if (effect.isHarmful == true) {
         effect.remove();
       }
     }
