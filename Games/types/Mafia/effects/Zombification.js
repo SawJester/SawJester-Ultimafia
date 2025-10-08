@@ -6,6 +6,7 @@ module.exports = class Zombification extends Effect {
   constructor(infector) {
     super("Zombification");
     this.infector = infector;
+    this.isHarmful = true;
   }
 
   apply(player) {
@@ -15,7 +16,7 @@ module.exports = class Zombification extends Effect {
       actor: this.infector,
       target: player,
       game: this.infector.game,
-      labels: ["zombification", "hidden", "absolute", "uncontrollable"],
+      labels: ["zombification", "hidden", "absolute", "uncontrollable", "malicious effect"],
       delay: 1,
       effect: this,
       run: function () {
