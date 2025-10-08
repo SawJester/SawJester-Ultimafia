@@ -5,7 +5,7 @@ module.exports = class Poison extends Effect {
   constructor(poisoner) {
     super("Poison");
     this.poisoner = poisoner;
-     this.isHarmful = true;
+    this.isHarmful = true;
   }
 
   apply(player) {
