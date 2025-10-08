@@ -54,7 +54,7 @@ module.exports = class VotingMadness extends Effect {
           actor: this.curser,
           target: [this.player, this.target],
           game: this.game,
-          labels: ["kill", "curse", "hidden"],
+          labels: ["kill", "curse", "hidden", "malicious effect"],
           effect: this,
           power: 1,
           run: function () {
