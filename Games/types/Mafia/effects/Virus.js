@@ -7,7 +7,7 @@ module.exports = class Virus extends Effect {
     super("Virus");
 
     this.InfectionTime = 0;
-
+    this.isHarmful = true;
     this.listeners = {
       state: function (stateInfo) {
         if (!stateInfo.name.match(/Night/)) {
@@ -22,7 +22,7 @@ module.exports = class Virus extends Effect {
           actor: null,
           game: this.player.game,
           priority: PRIORITY_KILL_DEFAULT,
-          labels: ["kill", "hidden", "absolute"],
+          labels: ["kill", "hidden", "absolute", "malicious effect"],
           run: function () {
             let infectedPlayers = this.game.players.filter((p) =>
               p.hasEffect("Virus")
