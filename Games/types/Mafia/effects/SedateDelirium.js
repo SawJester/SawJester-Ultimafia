@@ -6,6 +6,7 @@ module.exports = class SedateDelirium extends Effect {
   constructor(doer) {
     super("SedateDelirium");
     this.doer = doer;
+    this.isHarmful = true;
   }
 
   apply(player) {
@@ -14,7 +15,7 @@ module.exports = class SedateDelirium extends Effect {
     this.action = new Action({
       actor: this.doer,
       target: player,
-      labels: ["block"],
+      labels: ["block", "malicious effect"],
       priority: PRIORITY_NIGHT_ROLE_BLOCKER,
       delay: 1,
       effect: this,
