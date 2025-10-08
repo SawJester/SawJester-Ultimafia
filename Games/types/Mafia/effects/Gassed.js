@@ -5,7 +5,7 @@ module.exports = class Gassed extends Effect {
   constructor(gasser) {
     super("Gassed");
     this.gasser = gasser;
-     this.isHarmful = true;
+    this.isHarmful = true;
   }
 
   apply(player) {

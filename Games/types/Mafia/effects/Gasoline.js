@@ -4,6 +4,6 @@ module.exports = class Gasoline extends Effect {
   constructor(lifespan) {
     super("Gasoline");
     this.lifespan = lifespan || Infinity;
-     this.isHarmful = true;
+    this.isHarmful = true;
   }
 };
