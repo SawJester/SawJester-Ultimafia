@@ -16,7 +16,13 @@ module.exports = class Zombification extends Effect {
       actor: this.infector,
       target: player,
       game: this.infector.game,
-      labels: ["zombification", "hidden", "absolute", "uncontrollable", "malicious effect"],
+      labels: [
+        "zombification",
+        "hidden",
+        "absolute",
+        "uncontrollable",
+        "malicious effect",
+      ],
       delay: 1,
       effect: this,
       run: function () {
