@@ -26,7 +26,7 @@ module.exports = class Delirious extends Effect {
           game: this.player.game,
           effect: this,
           priority: PRIORITY_FULL_DISABLE,
-          labels: ["block", "hidden"],
+          labels: ["block", "hidden", "malicious effect"],
           run: function () {
             if (!this.target.isDelirious()) {
               return;
