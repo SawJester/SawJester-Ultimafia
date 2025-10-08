@@ -5,6 +5,7 @@ module.exports = class LeakWhispers extends Effect {
     super("Leak Whispers");
     this.lifespan = lifespan ?? Infinity;
     this.immunity["changeWhisperLeak"] = 1;
+     this.isHarmful = true;
   }
 
   speak(message) {
