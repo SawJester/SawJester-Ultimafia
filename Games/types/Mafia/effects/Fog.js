@@ -4,6 +4,7 @@ module.exports = class Fog extends Effect {
   constructor(lifespan) {
     super("Fog");
     this.lifespan = lifespan || Infinity;
+    this.isHarmful = true;
   }
 
   hear(message) {
