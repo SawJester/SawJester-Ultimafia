@@ -4,6 +4,7 @@ module.exports = class BlockWhispers extends Effect {
   constructor(lifespan) {
     super("Block Whispers");
     this.lifespan = lifespan ?? Infinity;
+    this.isHarmful = true;
   }
 
   speak(message) {
