@@ -8,6 +8,7 @@ module.exports = class VotingMadness extends Effect {
     this.curser = curser;
     this.target = target;
     this.lifespan = lifespan;
+    this.isHarmful = true;
 
     this.listeners = {
       meetingFinish: function (meeting) {
