@@ -7,6 +7,8 @@ module.exports = class Alcoholic extends Effect {
   constructor() {
     super("Alcoholic");
 
+    this.isHarmful = true;
+
     this.listeners = {
       state: function () {
         if (this.game.getStateName() != "Night") return;
