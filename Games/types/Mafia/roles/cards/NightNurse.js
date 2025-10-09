@@ -17,7 +17,7 @@ module.exports = class NightNurse extends Card {
         flags: ["voting"],
         action: {
           labels: ["cleanse"],
-          priority: PRIORITY_CANCEL_ROLEBLOCK_ACTIONS+1,
+          priority: PRIORITY_CANCEL_ROLEBLOCK_ACTIONS + 1,
           run: function () {
             this.cleanse(1);
             this.role.PlayerToCleanse = this.target;
@@ -36,7 +36,7 @@ module.exports = class NightNurse extends Card {
           return;
         }
 
-          var action2 = new Action({
+        var action2 = new Action({
           actor: this.player,
           game: this.player.game,
           role: this,
