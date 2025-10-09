@@ -28,10 +28,9 @@ module.exports = class MafiaAction extends Action {
     power = power || 1;
     target = target || this.target;
 
-    
     //target.setTempImmunity("poison", power);
     //target.setTempImmunity("delirium", power);
-    let effect = player.giveEffect("SafeFromEffects",this.actor,power,1,);
+    let effect = player.giveEffect("SafeFromEffects", this.actor, power, 1);
     effect.source = this.role;
     this.passiveEffects.push(effect);
 
