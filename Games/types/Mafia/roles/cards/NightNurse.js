@@ -3,6 +3,7 @@ const Action = require("../../Action");
 const {
   PRIORITY_EFFECT_REMOVER_DEFAULT,
   PRIORITY_EFFECT_REMOVER_EARLY,
+  PRIORITY_CANCEL_ROLEBLOCK_ACTIONS,
 } = require("../../const/Priority");
 
 module.exports = class NightNurse extends Card {
@@ -16,7 +17,7 @@ module.exports = class NightNurse extends Card {
         flags: ["voting"],
         action: {
           labels: ["cleanse"],
-          priority: PRIORITY_EFFECT_REMOVER_EARLY,
+          priority: PRIORITY_CANCEL_ROLEBLOCK_ACTIONS+1,
           run: function () {
             this.cleanse(1);
             this.role.PlayerToCleanse = this.target;
@@ -35,6 +36,19 @@ module.exports = class NightNurse extends Card {
           return;
         }
 
+          var action2 = new Action({
+          actor: this.player,
+          game: this.player.game,
+          role: this,
+          priority: PRIORITY_EFFECT_REMOVER_EARLY,
+          labels: ["cleanse"],
+          run: function () {
+            if (this.role.PlayerToCleanse != null) {
+              this.cleanse(1, this.role.PlayerToCleanse);
+            }
+          },
+        });
+
         var action = new Action({
           actor: this.player,
           game: this.player.game,
@@ -50,6 +64,7 @@ module.exports = class NightNurse extends Card {
         });
 
         this.game.queueAction(action);
+        this.game.queueAction(action2);
       },
     };
   }
