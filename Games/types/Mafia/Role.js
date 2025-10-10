@@ -272,14 +272,12 @@ module.exports = class MafiaRole extends Role {
     return true;
   }
 
-giveEffect(player, effectName, args){
-  if(!player){
-    player = this.player;
-  }
- let effect = player.giveEffect(effectName, args);
-  effect.source = this;
+  giveEffect(player, effectName, args) {
+    if (!player) {
+      player = this.player;
+    }
+    let effect = player.giveEffect(effectName, args);
+    effect.source = this;
     return effect;
-}
-
-  
+  }
 };
