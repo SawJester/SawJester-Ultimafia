@@ -549,6 +549,14 @@ module.exports = class MafiaGame extends Game {
     delete this.swaps;
   }
 
+  checkEffectAutoRemove(){
+    for(let player of this.players){
+      for(let effect of player.effects){
+        effect.shouldAutoRemove();
+      }
+    }
+  }
+
   getRoleNightOrder() {
     var roleName;
     var nightActions = [];
