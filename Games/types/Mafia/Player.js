@@ -344,6 +344,8 @@ module.exports = class MafiaPlayer extends Player {
       this.game.broadcast("condemn");
     }
 
+    this.game.checkEffectAutoRemove();
+
     if (this.queuedGraveyardParticipationMessage) {
       return;
     }
@@ -368,6 +370,16 @@ module.exports = class MafiaPlayer extends Player {
     }
 
     this.queuedGraveyardParticipationMessage = true;
+  }
+
+  revive(revivalType, reviver, instant){
+    super.revive(revivalType, reviver, instant);
+    this.game.checkEffectAutoRemove();
+  }
+
+  setRole(roleName, roleData, noReveal, noAlert, noEmit, faction, items){
+    super.setRole(roleName, roleData, noReveal, noAlert, noEmit, faction, items);
+    this.game.checkEffectAutoRemove();
   }
 
   speak(message) {
