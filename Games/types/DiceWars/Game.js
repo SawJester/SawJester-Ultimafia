@@ -15,8 +15,12 @@ module.exports = class DiceWarsGame extends Game {
     this.maxDicePerTerritory = parseInt(options.settings.maxDice) || 8; // max dice per territory (4, 8, or 16)
     this.gameStarted = false;
     this.states = [
-      { name: "Postgame" },
-      { name: "Pregame" },
+      { 
+        name: "Postgame", 
+      },
+      { name: "Pregame",
+
+       },
       {
         name: "Play",
         length: options.settings.stateLengths["Play"] ?? 300,
@@ -132,7 +136,7 @@ module.exports = class DiceWarsGame extends Game {
    * For first round, last 3 players receive bonus dice
    */
   distributeInitialTerritories() {
-    const activePlayers = this.turnOrder.map(id => this.players.find(p => p.id === id));
+    const activePlayers = this.turnOrder.map(id => this.players.filter((p) => p.id === id)[0]);
     const shuffledTerritories = [...this.territories].sort(() => Math.random() - 0.5);
     
     // Determine which players get first-round bonus (last 3 in turn order)
@@ -187,12 +191,12 @@ module.exports = class DiceWarsGame extends Game {
       this.currentTurnPlayerId = this.turnOrder[0];
       this.hasAttacked = false;
       
-      const firstPlayer = this.players.find(p => p.id === this.currentTurnPlayerId);
-      this.sendAlert(`Round 1, Turn 1: ${firstPlayer.name}'s turn!`);
+      const firstPlayer = this.players.filter((p) => p.id === this.currentTurnPlayerId)[0];
+      //this.sendAlert(`Round 1, Turn 1: ${firstPlayer.name}'s turn!`);
       
       // Show turn order
-      const playerNames = this.turnOrder.map(id => this.players.find(p => p.id === id).name);
-      this.sendAlert(`Turn order: ${playerNames.join(" → ")}`);
+      const playerNames = this.turnOrder.map(id => this.players.filter((p) => p.id === id)[0].name);
+      //this.sendAlert(`Turn order: ${playerNames.join(" → ")}`);
     }
 
     this.sendGameState();
@@ -540,7 +544,7 @@ module.exports = class DiceWarsGame extends Game {
     // If it was this player's turn, move to next player
     if (this.currentTurnPlayerId === player.id && this.turnOrder.length > 0) {
       this.currentTurnPlayerId = this.turnOrder[this.turnIndex % this.turnOrder.length];
-      const nextPlayer = this.players.find(p => p.id === this.currentTurnPlayerId);
+      const nextPlayer = this.players.filter((p) => p.id === this.currentTurnPlayerId)[0];
       if (nextPlayer) {
         this.sendAlert(`${nextPlayer.name}'s turn (after ${player.name} left)`);
       }

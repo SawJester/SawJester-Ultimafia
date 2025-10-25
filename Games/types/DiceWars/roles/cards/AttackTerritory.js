@@ -9,7 +9,7 @@ module.exports = class AttackTerritory extends Card {
         actionName: "Attack",
         states: ["Play"],
         flags: ["voting"],
-        inputType: "custom",
+        inputType: "custom2",
         targets: function() {
           // Generate list of valid attack combinations
           const validAttacks = [];
